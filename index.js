@@ -17,15 +17,19 @@ const strangerThingsService = new StrangerThingsService(
 
 app.use(cors());
 
+const hereIsTheUpsideDown = (process.env.UPSIDEDOWN_MODE === 'true');
+
 app.get('/', (req, res) => {
   const characters = strangerThingsService.search(
     req.query,
-    process.env.UPSIDEDOWN_MODE,
+    hereIsTheUpsideDown,
   );
 
   res.status(200).json(characters);
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`Escutando na porta ${process.env.PORT}`);
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => {
+  console.log(`Escutando na porta ${port}`);
 });
